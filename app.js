@@ -14,6 +14,7 @@ const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
 const path = require('path');
 const mongoose = require('mongoose');
+const httpsRedirect = require('./config/https-redirect');
 const passport = require('passport');
 const sass = require('node-sass-middleware');
 
@@ -39,6 +40,8 @@ const passportConfig = require('./config/passport');
  * Create Express server.
  */
 const app = express();
+app.enable('trust proxy'); //needed if behind a load balancer
+app.use(httpsRedirect);
 
 /**
  * Connect to MongoDB.

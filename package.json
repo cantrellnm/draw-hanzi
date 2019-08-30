@@ -27,7 +27,6 @@
     "express-flash": "^0.0.2",
     "express-handlebars": "^3.1.0",
     "express-session": "^1.16.2",
-    "express-status-monitor": "^1.2.6",
     "googleapis": "^42.0.0",
     "hanzi": "^2.1.5",
     "hanzi-writer": "^2.0.0",
