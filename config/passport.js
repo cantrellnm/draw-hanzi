@@ -81,7 +81,6 @@ const googleStrategyConfig = new GoogleStrategy({
             refreshToken,
           });
           user.profile.name = user.profile.name || profile.displayName;
-          user.profile.gender = user.profile.gender || profile._json.gender;
           user.profile.picture = user.profile.picture || profile._json.picture;
           user.save((err) => {
             req.flash('info', { msg: 'Google account has been linked.' });
@@ -112,7 +111,6 @@ const googleStrategyConfig = new GoogleStrategy({
             refreshToken,
           });
           user.profile.name = profile.displayName;
-          user.profile.gender = profile._json.gender;
           user.profile.picture = profile._json.picture;
           user.save((err) => {
             done(err, user);
