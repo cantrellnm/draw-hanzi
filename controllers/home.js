@@ -23,3 +23,23 @@ exports.about = (req, res) => {
     title: 'About'
   });
 };
+
+/**
+ * GET /privacy
+ * Privacy policy
+ */
+exports.privacy = (req, res) => {
+  res.render('privacy', {
+    title: 'Privacy Policy'
+  });
+};
+
+/**
+ * GET /tos
+ * Terms of service
+ */
+exports.tos = (req, res) => {
+  res.render('tos', {
+    title: 'Terms of Service'
+  });
+};
