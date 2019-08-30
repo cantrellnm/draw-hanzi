@@ -121,5 +121,5 @@ exports.deleteList = (req, res) => {
 
 function filterListContent(content) {
   // remove characters that aren't in given unicode blocks or whitespace
-  return content.replace(/(?!([\u4E00–\u9FFF]|[\u3400–\u4DBF]|\s))./g, '');
+  return content.replace(/(?!([\u4E00-\u62FF]|[\u6300-\u77FF]|[\u7800-\u8CFF]|[\u8D00–\u9FFF]|[\u3400–\u4DBF]|\s))./g, '');
 }
