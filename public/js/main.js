@@ -49,7 +49,7 @@ $(document).ready(() => {
 function validateListContent(e) {
   let textarea = e.target;
   // remove characters that aren't in given unicode blocks or whitespace
-  textarea.value = textarea.value.replace(/(?!([\u4E00-\u62FF]|[\u6300-\u77FF]|[\u7800-\u8CFF]|[\u8D00–\u9FFF]|[\u3400–\u4DBF]|\s))./g, '');
+  textarea.value = textarea.value.replace(/(?!([\u4E00–\u9FFF]|[\u3400–\u4DBF]|\s))./g, '');
 }
 
 function setList(target) {
@@ -105,7 +105,7 @@ function drawCharacters() {
   startQuiz(writers[0], 0);
 }
 
-function insertCharacter(char，i) {
+function insertCharacter(char, i) {
   $('#practice').append(createCharacterContainer(char, i));
   let writer = HanziWriter.create(`practice-character-${char}-${i}`, char, {
     width: 200,
