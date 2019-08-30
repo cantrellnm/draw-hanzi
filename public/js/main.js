@@ -105,9 +105,9 @@ function drawCharacters() {
   startQuiz(writers[0], 0);
 }
 
-function insertCharacter(char) {
-  $('#practice').append(createCharacterContainer(char));
-  let writer = HanziWriter.create(`practice-character-${char}`, char, {
+function insertCharacter(char，i) {
+  $('#practice').append(createCharacterContainer(char, i));
+  let writer = HanziWriter.create(`practice-character-${char}-${i}`, char, {
     width: 200,
     height: 200,
     showOutline,
@@ -191,8 +191,8 @@ function animate(writer, delay, i) {
   }
 }
 
-function createCharacterContainer(char) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="practice-character" id="practice-character-${char}">`+
+function createCharacterContainer(char, i) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="practice-character" id="practice-character-${char}-${i}">`+
             '<line x1="0" y1="0" x2="200" y2="200" stroke="#DDD" />'+
             '<line x1="200" y1="0" x2="0" y2="200" stroke="#DDD" />'+
             '<line x1="100" y1="0" x2="100" y2="200" stroke="#DDD" />'+
