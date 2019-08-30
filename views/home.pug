@@ -1,0 +1,16 @@
+extends layout
+
+block content
+  .form-group
+    label(for="list-select") List
+    select#list-select.custom-select
+      if user && user.lists.length
+        optgroup(label="Your Lists")
+          each list,i in user.lists
+            option(value=list.content selected=(i===0) ? true : false)= list.name
+      optgroup(label="Public Lists")
+        each list,i in public_lists
+          option(value=list.content selected=(!user.lists && i===0) ? true : false )=list.name
+
+  include partials/_listoptions
+  include partials/_draw

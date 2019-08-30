@@ -1,0 +1,23 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h1= list.name
+    if list.user.equals(user.id)
+      menu
+        a.btn.btn-secondary(href=`/account/list/${list.id}/edit`) Edit
+        form(action=`/account/list/${list.id}/delete` method='POST')
+          input(type='hidden', name='_csrf', value=_csrf)
+          input.btn.btn-danger(type='Submit' value='Delete')
+
+  h2 Practice
+  include ../partials/_listoptions
+  include ../partials/_draw
+
+  h2 List
+  input#practice-list-content(type="hidden" value=list.content)
+
+  ul.list-link-content
+    each char in list.content.split(' ')
+      li: a(href=`/draw/${char}`)
+        span(lang="zh" class="character")= char

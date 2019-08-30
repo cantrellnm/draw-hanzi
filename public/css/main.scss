@@ -1,0 +1,221 @@
+@import "themes/modern/variables";
+
+@import "node_modules/bootstrap/scss/bootstrap";
+@import "node_modules/@ladjs/bootstrap-social/bootstrap-social.scss";
+@import "node_modules/@fortawesome/fontawesome-free/scss/fontawesome";
+@import "node_modules/@fortawesome/fontawesome-free/scss/brands";
+@import "node_modules/@fortawesome/fontawesome-free/scss/regular";
+@import "node_modules/@fortawesome/fontawesome-free/scss/solid";
+
+@import "themes/modern/modern";
+
+// Scaffolding
+// -------------------------
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  padding-top: 80px;
+  margin-bottom: 75px;
+  font-size: 14px;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 45px;
+  line-height: 45px;
+
+  p, ul {
+    margin-bottom: 0;
+  }
+}
+
+// Input Fields
+// -------------------------
+
+textarea {
+  resize: vertical;
+}
+
+// Navbar
+// -------------------------
+
+.navbar-nav img {
+  width: 30px;
+  min-height: 30px;
+  margin: -15px 15px -15px;
+}
+
+.navbar{
+  background: $gray-light;
+  margin-bottom: 20px;
+  display: block;
+}
+
+.navbar-brand {
+  font-size: 18px;
+  float: left;
+  border-bottom: 2px solid;
+}
+
+.navbar-toggler {
+  position: relative;
+  float: right;
+  margin-bottom: 8px;
+  margin-top: 8px;
+}
+
+.navbar-toggler-icon {
+  font-size: 16px;
+}
+
+.dropdown-menu {
+  left: initial;
+  right: 0;
+}
+
+/*
+* Solves Bootstrap 4 issue
+* https://github.com/twbs/bootstrap/issues/25654
+*/
+/* Styles in sm disposition and up */
+@media (min-width: 576px) and (max-width: 767px) {
+  /* Solves bs4 bug */
+  .navbar-expand-md > .container,
+  .navbar-expand-lg > .container,
+  .navbar-expand-xl > .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+/* Styles in md disposition and up */
+@media (min-width: 768px) and (max-width: 991px) {
+  /* Solves bs4 bug */
+  .navbar-expand-lg > .container,
+  .navbar-expand-xl > .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+/* Styles in lg disposition and up */
+@media (min-width: 992px) and (max-width: 1199px) {
+  /* Solves bs4 bug */
+  .navbar-expand-xl > .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}
+
+// Alerts
+// -------------------------
+
+.alert {
+  margin-top: 20px;
+}
+
+// Font Icons
+// -------------------------
+
+.fa, .fab, .fas, .far {
+  margin-right: 6px;
+}
+
+///  *** CUSTOM
+
+h1 {
+  display: inline-block;
+  margin-bottom: 0;
+  & + .btn, & + menu {
+    float: right;
+  }
+}
+.character[lang="zh"] {
+  font-family: SimHei, 'Hiragino Sans GB', sans-serif;
+}
+menu {
+  padding-left: 0;
+  margin: 0;
+  .btn + .btn, .btn + form {
+    display: inline-block;
+    margin-left: 1rem;
+  }
+}
+
+// List options
+#list-options {
+  text-align: center;
+}
+
+// Practice
+@media (min-width: 775px) {
+  #practice-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
+    grid-template-areas: 'char info' 'char options';
+  }
+}
+
+#practice-character {
+  grid-area: info;
+  margin-bottom: 1rem;
+  .character {
+    font-size: 1.5em;
+    & + label {
+      margin-left: 1em;
+    }
+  }
+  .pinyin, .definition {
+    display: block;
+  }
+  .pinyin {
+    font-weight: bold;
+  }
+}
+#practice-options {
+  grid-area: options;
+}
+#practice {
+  grid-area: char;
+  &.no-grid {
+    .practice-character {
+      border-color: white;
+    }
+    svg line {
+      display: none;
+    }
+  }
+  .practice-character {
+    border: 1px solid #DDD;
+    display: inline-block;
+
+    & + .practice-character {
+      position: relative;
+      left: -1px;
+    }
+  }
+}
+
+ul.lists {
+  padding-left: 0;
+  list-style-type: none;
+  li {
+    margin-bottom: 1rem;
+  }
+}
+ul.list-link-content {
+  padding-left: 0;
+  list-style-type: none;
+  display: flex;
+  li a {
+    font-size: 2rem;
+    padding: 1rem;
+  }
+}

@@ -1,0 +1,18 @@
+div#practice-container
+  div#practice-character.card
+  div#practice
+    noscript Javascript must be enabled in your browser for this page to work.
+  menu#practice-options
+    .custom-control.custom-switch
+      input#show-outline.custom-control-input(type="checkbox" checked)
+      label.custom-control-label(for="show-outline") Show Outline
+    .custom-control.custom-switch
+      input#show-grid.custom-control-input(type="checkbox" checked)
+      label.custom-control-label(for="show-grid") Show Grid
+    .form-group
+      label(for="hint-on-miss") Show Hint After Missing:
+      select#hint-on-miss.custom-select
+        option(value='1' selected) One
+        option(value='2') Two
+        option(value='3') Three
+    button.btn.btn-primary#animate Play Animation

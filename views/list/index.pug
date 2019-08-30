@@ -1,0 +1,13 @@
+extends ../layout
+
+block content
+  .pb-2.mt-2.mb-4.border-bottom
+    h1 Your Lists
+    a.btn.btn-primary(href='/account/lists/new', role='button') New List
+
+  ul.lists
+    each list in user.lists
+      li.card
+        a.list.card-body(href=`/account/list/${list.id}`)
+          h3.list-name= list.name
+          .list-content= list.content.length > 20 ? `${list.content.substring(0, 20)} ...` : list.content

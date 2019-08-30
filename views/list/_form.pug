@@ -1,0 +1,15 @@
+form(id='list-form', method='POST')
+  input(type='hidden', name='_csrf', value=_csrf)
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='name') Name
+    .col-md-7
+      input.form-control(type='text', name='name', id='name', value=list.name autocomplete='list name')
+  .form-group.row
+    label.col-md-3.col-form-label.font-weight-bold.text-right(for='content') Content
+    .col-md-7
+      textarea.form-control( name='content', id='content')
+        = list.content
+      small#contentHelpBlock.form-text.text-muted Each word and character should be separated by a space, ex: "一 二".
+  .form-group.offset-sm-3.col-md-7.pl-2
+    button.btn.btn-primary(type='submit')
+      | Save List
