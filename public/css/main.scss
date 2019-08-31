@@ -169,6 +169,7 @@ menu {
   flex-flow: row wrap;
   .card-body {
     margin-bottom: 0;
+    text-align: center;
   }
   .character {
     font-size: 1.5em;
@@ -188,6 +189,7 @@ menu {
 }
 #practice {
   grid-area: char;
+  margin-bottom: 1rem;
   &.no-grid {
     .practice-character {
       border-color: white;
@@ -199,11 +201,6 @@ menu {
   .practice-character {
     border: 1px solid #DDD;
     display: inline-block;
-
-    & + .practice-character {
-      position: relative;
-      left: -1px;
-    }
   }
 }
 
