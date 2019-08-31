@@ -9,7 +9,9 @@
     .collapse.navbar-collapse
       ul.nav.navbar-nav
         li.nav-item(class=(title === 'Lists') ? 'active' : undefined)
-          a.nav-link(href='/lists') Lists
+          a.nav-link(href='/lists')
+            i.fas.fa-list-ul.fa-sm
+            | Lists
       ul.nav.navbar-nav.ml-auto
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)

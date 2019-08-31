@@ -60,7 +60,6 @@ textarea {
 .navbar-brand {
   font-size: 18px;
   float: left;
-  border-bottom: 2px solid;
 }
 
 .navbar-toggler {
@@ -137,7 +136,7 @@ h1 {
   }
 }
 .character[lang="zh"] {
-  font-family: SimHei, 'Hiragino Sans GB', sans-serif;
+  font-family: KaiTi, 'Hiragino Sans GB', sans-serif;
 }
 menu {
   padding-left: 0;
@@ -172,7 +171,7 @@ menu {
     text-align: center;
   }
   .character {
-    font-size: 1.5em;
+    font-size: 1.5rem;
     & + label {
       margin-left: 1em;
     }
@@ -181,7 +180,9 @@ menu {
     display: block;
   }
   .pinyin {
+    font-family: Calibri, Helvetica, sans-serif;
     font-weight: bold;
+    color: $gray;
   }
 }
 #practice-options {

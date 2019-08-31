@@ -8,7 +8,7 @@ exports.index = (req, res) => {
   List.find({public: true}).exec((err, lists) => {
     if (err) return res.status(500).send('Server error loading lists');
     res.render('home', {
-      title: 'Home',
+      title: 'Practice',
       public_lists: lists
     });
   });
