@@ -49,7 +49,8 @@ $(document).ready(() => {
 function validateListContent(e) {
   let textarea = e.target;
   // remove characters that aren't in given unicode blocks or whitespace
-  textarea.value = textarea.value.replace(/(?!([\u4E00-\u62FF]|[\u6300-\u77FF]|[\u7800-\u8CFF]|[\u8D00–\u9FFF]|[\u3400–\u4DBF]|\s))./g, '');
+  textarea.value = textarea.value.replace(/(?!([\p{Ideographic}|\p{Unified_Ideograph}|\p{Radical}]|\s))./ug, '');
+  textarea.value = textarea.value.replace(/\s{2,}/g, ' ');
 }
 
 function setList(target) {

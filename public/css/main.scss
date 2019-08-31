@@ -166,6 +166,10 @@ menu {
 #practice-character {
   grid-area: info;
   margin-bottom: 1rem;
+  flex-flow: row wrap;
+  .card-body {
+    margin-bottom: 0;
+  }
   .character {
     font-size: 1.5em;
     & + label {

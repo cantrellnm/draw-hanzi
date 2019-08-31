@@ -6,7 +6,8 @@ hanzi.start();
  */
 exports.getCharDraw = (req, res) => {
   let { char } = req.params;
-  char = char.replace(/(?!([\u4E00-\u62FF]|[\u6300-\u77FF]|[\u7800-\u8CFF]|[\u8D00–\u9FFF]|[\u3400–\u4DBF]))./g, '');
+  char = char.replace(/(?!([\p{Ideographic}|\p{Unified_Ideograph}|\p{Radical}]))./ug, '');
+  char = char.replace(/\s{2,}/g, ' ').trim();
   if (!char) return res.sendStatus(404);
   res.render('char', {
     title: char,
