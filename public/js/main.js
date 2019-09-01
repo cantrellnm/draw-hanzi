@@ -1,4 +1,24 @@
 /* eslint-env jquery, browser */
+import Speak from './lib/speak-tts.js';
+const speech = new Speak(); // will throw an exception if not browser supported
+if (speech.hasBrowserSupport()) { // returns a boolean
+  speech.init({
+    'lang': 'zh-CN'
+  }).then((data) => {
+  // The "data" object contains the list of available voices and the voice synthesis params
+  console.log("Speech is ready, voices are available", data);
+  let voices = data.voices.filter(v => {return v.lang === 'zh-CN'});
+  if (voices.length) {
+    let voice = voices.pop();
+    speech.setVoice(voice.name);
+    console.log('Set voice to '+voice.name);
+  } else {
+    console.log('No voices found for zh-CN');
+  }
+}).catch(e => {
+  console.error("An error occured while initializing Speech: ", e);
+})
+}
 
 let list = [];
 let listIndex = 0;
@@ -27,13 +47,17 @@ $(document).ready(() => {
   $('#practice-options #animate').on('click', animateCharacters);
   $('#practice-options #show-outline').on('change', () => {
     showOutline = !showOutline;
-    writers.forEach(w => {
-      if (showOutline) {
-        w.showOutline({duration: 0});
-      } else {
-        w.hideOutline({duration: 0});
-      }
-    });
+    if (showOutline) {
+      $('#practice-container').removeClass('hide-character');
+      writers.forEach(w => {
+          w.showOutline({duration: 0});
+      });
+    } else {
+      $('#practice-container').addClass('hide-character');
+      writers.forEach(w => {
+          w.hideOutline({duration: 0});
+      });
+    }
   });
   $('#practice-options #show-grid').on('change', () => {
     $('#practice').toggleClass('no-grid');
@@ -42,6 +66,14 @@ $(document).ready(() => {
     showHintAfterMisses = e.target.options[e.target.selectedIndex].value
     cancelQuiz();
     startQuiz(writers[0], 0);
+  });
+
+  // SPEAK
+  $('body').on('click', 'button.speak', (e) => {
+    let text = e.target.innerText;
+    if (text) {
+      speech.speak({ text }).catch(console.error);
+    }
   });
 
 });
@@ -76,23 +108,35 @@ function nextListIndex() {
 }
 
 function characterInfo(char) {
-  $('#practice-character').html('');
   if (char) {
+    // char info loading start
+    $('body').addClass('character-info-loading');
     $.getJSON("/char/data/" + char, function(res) {
+      $('#practice-character').html('');
       if (res.data && res.data.length) {
         res.data.forEach(characterDefinition);
       } else {
         $('#practice-character').append(`<p class="character-default card-body"><span lang="zh" class="character">${char}</span></p>`);
         console.log(res);
       }
+      // char info loading end
+      $('body').removeClass('character-info-loading');
     });
+  } else {
+    $('#practice-character').html('');
   }
 }
 function characterDefinition(def) {
   let txt = '<p class="character-definition card-body">';
   if (def.simplified) txt += `<span lang="zh" class="character simplified">${def.simplified}</span>`;
   if (def.traditional && def.traditional !== def.simplified) txt += `<label>Traditional: <span lang="zh" class="character traditional">${def.traditional}</span></label>`;
-  if (def.pinyin) txt += `<span lang="zh" class="pinyin">${PinyinConverter.convert(def.pinyin)}</span>`;
+  if (def.pinyin) {
+    if (speech.hasBrowserSupport()) {
+      txt += `<button lang="zh" class="btn pinyin speak">${PinyinConverter.convert(def.pinyin)}  <i class="fas fa-volume-up fa-xs"></i></button>`;
+    } else {
+      txt += `<span lang="zh" class="pinyin">${PinyinConverter.convert(def.pinyin)}</span>`;
+    }
+  }
   if (def.definition) txt += `<span class="definition">${def.definition.split('/').join(', ')}</span>`;
   txt += '</p>';
   $('#practice-character').append(txt);
@@ -101,12 +145,17 @@ function characterDefinition(def) {
 function drawCharacters() {
   $('#practice').html('');
   writers = [];
-  list[listIndex].split('').forEach(insertCharacter);
+  let chars = list[listIndex].split('');
+  if (chars.length) {
+    // practice loading start
+    $('body').addClass('stroke-data-loading');
+    chars.forEach(insertCharacter);
+  }
   hideCharacters();
   startQuiz(writers[0], 0);
 }
 
-function insertCharacter(char, i) {
+function insertCharacter(char, i, arr) {
   $('#practice').append(createCharacterContainer(char, i));
   let writer = HanziWriter.create(`practice-character-${char}-${i}`, char, {
     width: 200,
@@ -118,6 +167,10 @@ function insertCharacter(char, i) {
     padding: 5,
     charDataLoader: function(char, onComplete) {
       $.getJSON("/char/strokes/" + char, function(charData) {
+        if (i === arr.length - 1) {
+          // practice loading ended
+          $('body').removeClass('stroke-data-loading');
+        }
         onComplete(charData);
       });
     }

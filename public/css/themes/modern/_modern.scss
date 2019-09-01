@@ -4,8 +4,8 @@
 // -------------------------
 
 footer {
-  color: #fff;
-  background-color: $gray-darker;
+  color: var(--gray-dark);
+  background-color: var(--white);
 
   a:hover {
     color: #fff;
