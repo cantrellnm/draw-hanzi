@@ -6,9 +6,10 @@ block content
     if list.user.equals(user.id)
       menu
         a.btn.btn-secondary(href=`/account/list/${list.id}/edit`) Edit
-        form(action=`/account/list/${list.id}/delete` method='POST')
-          input(type='hidden', name='_csrf', value=_csrf)
-          input.btn.btn-danger(type='Submit' value='Delete')
+        if !list.public
+          form(action=`/account/list/${list.id}/delete` method='POST')
+            input(type='hidden', name='_csrf', value=_csrf)
+            input.btn.btn-danger(type='Submit' value='Delete')
 
   h2 Practice
   include ../partials/_listoptions

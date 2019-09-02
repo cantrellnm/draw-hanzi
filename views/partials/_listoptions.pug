@@ -1,4 +1,10 @@
 #list-options
+  .form-group
+    label(for="list-order-select") List Order
+    select#list-order-select.custom-select.form-control
+      option(value="original") Default
+      option(value="reverse") Reverse
+      option(value="random") Random
   menu
     button#previous.btn.btn-primary Previous
     button#next.btn.btn-primary Next

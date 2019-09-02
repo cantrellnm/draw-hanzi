@@ -9,7 +9,7 @@ if (speech.hasBrowserSupport()) { // returns a boolean
   console.log("Speech is ready, voices are available", data);
   let voices = data.voices.filter(v => {return v.lang === 'zh-CN'});
   if (voices.length) {
-    let voice = voices.pop();
+    let voice = voices[0];
     speech.setVoice(voice.name);
     console.log('Set voice to '+voice.name);
   } else {
@@ -21,9 +21,12 @@ if (speech.hasBrowserSupport()) { // returns a boolean
 }
 
 let list = [];
+let orderedList = [];
+let listOrder = 'original';
 let listIndex = 0;
 let writers = [];
 let showOutline = true;
+let autoplayAudio = false;
 let showHintAfterMisses = 1;
 $(document).ready(() => {
 
@@ -40,6 +43,7 @@ $(document).ready(() => {
   }
 
   // LIST OPTIONS
+  $('#list-options #list-order-select').on('change', setListOrder);
   $('#list-options #previous').on('click', previousListIndex);
   $('#list-options #next').on('click', nextListIndex);
 
@@ -61,6 +65,9 @@ $(document).ready(() => {
   });
   $('#practice-options #show-grid').on('change', () => {
     $('#practice').toggleClass('no-grid');
+  });
+  $('#practice-options #autoplay-audio').on('change', () => {
+    autoplayAudio = !autoplayAudio;
   });
   $('#practice-options #hint-on-miss').on('change', (e) => {
     showHintAfterMisses = e.target.options[e.target.selectedIndex].value
@@ -87,14 +94,32 @@ function validateListContent(e) {
 
 function setList(target) {
   list = $(target).val().split(/\s/);
+  orderedList = orderList();
   setListIndex(0);
+}
+
+function setListOrder() {
+  listOrder = $(this).val();
+  orderedList = orderList();
+  setListIndex(0);
+}
+
+function orderList() {
+  switch (listOrder) {
+    case 'original':
+      return [...list];
+    case 'reverse':
+      return [...list].reverse();
+    case 'random':
+      return [...list].sort((a, b) => { return 0.5 - Math.random(); });
+  }
 }
 
 function setListIndex(val) {
   listIndex = val;
   $('#list-index').html(`showing ${val+1} of ${list.length}`);
   drawCharacters();
-  characterInfo(list[listIndex]);
+  characterInfo(orderedList[listIndex]);
 }
 
 function previousListIndex() {
@@ -115,6 +140,9 @@ function characterInfo(char) {
       $('#practice-character').html('');
       if (res.data && res.data.length) {
         res.data.forEach(characterDefinition);
+        if (res.data[0].pinyin && autoplayAudio) {
+          speech.speak({ text: PinyinConverter.convert(res.data[0].pinyin) }).catch(console.error);
+        }
       } else {
         $('#practice-character').append(`<p class="character-default card-body"><span lang="zh" class="character">${char}</span></p>`);
         console.log(res);
@@ -145,7 +173,7 @@ function characterDefinition(def) {
 function drawCharacters() {
   $('#practice').html('');
   writers = [];
-  let chars = list[listIndex].split('');
+  let chars = orderedList[listIndex].split('');
   if (chars.length) {
     // practice loading start
     $('body').addClass('stroke-data-loading');
@@ -186,6 +214,7 @@ function hideCharacters() {
 
 function startQuiz(writer, i) {
   if (writer) {
+    writer.target.node.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
     writer.quiz({
       showHintAfterMisses : showHintAfterMisses,
       onComplete: function(summaryData) {
