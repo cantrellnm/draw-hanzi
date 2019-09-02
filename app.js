@@ -136,6 +136,7 @@ app.get('/list/:id', listController.viewList);
 app.get('/draw/:char', charController.getCharDraw);
 app.get('/char/strokes/:char', charController.getCharStrokes);
 app.get('/char/data/:char', charController.getCharData);
+app.post('/char/score', charController.addAttempt);
 app.get('/account/verify', passportConfig.isAuthenticated, userController.getVerifyEmail);
 app.get('/account/verify/:token', passportConfig.isAuthenticated, userController.getVerifyEmailToken);
 app.get('/account', passportConfig.isAuthenticated, userController.getAccount);

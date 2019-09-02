@@ -24,6 +24,7 @@ let list = [];
 let orderedList = [];
 let listOrder = 'original';
 let listIndex = 0;
+let score = [];
 let writers = [];
 let showOutline = true;
 let autoplayAudio = false;
@@ -138,6 +139,7 @@ function characterInfo(char) {
     $('body').addClass('character-info-loading');
     $.getJSON("/char/data/" + char, function(res) {
       $('#practice-character').html('');
+      // definition data
       if (res.data && res.data.length) {
         res.data.forEach(characterDefinition);
         if (res.data[0].pinyin && autoplayAudio) {
@@ -147,6 +149,8 @@ function characterInfo(char) {
         $('#practice-character').append(`<p class="character-default card-body"><span lang="zh" class="character">${char}</span></p>`);
         console.log(res);
       }
+      // score
+      console.log(res.score);
       // char info loading end
       $('body').removeClass('character-info-loading');
     });
@@ -214,14 +218,26 @@ function hideCharacters() {
 
 function startQuiz(writer, i) {
   if (writer) {
+    score = [];
     writer.target.node.scrollIntoView({behavior: "smooth", block: "nearest", inline: "center"});
     writer.quiz({
       showHintAfterMisses : showHintAfterMisses,
+      onCorrectStroke: function(data) {
+        score.push(1);
+      },
+      onMistake: function(data) {
+        score.push(0);
+      },
       onComplete: function(summaryData) {
         console.log(summaryData);
+        // start next
         if (writers[i+1]) {
+          // next char
           startQuiz(writers[i+1], i+1);
         } else {
+          // send score
+          $.post("/char/score", { char: orderedList[listIndex], attempt: score, _csrf: $('#practice-container input[name="_csrf"]').val() }, (res) => {}, 'json');
+          // next in list
           if (list.length > 1) {
             setTimeout(nextListIndex, 1500);
           } else {
