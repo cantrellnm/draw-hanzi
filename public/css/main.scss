@@ -178,6 +178,7 @@ body.character-info-loading #practice-character {
 }
 #practice-character {
   #character-score {
+    flex: 1 0 100%;
     margin-left: auto;
     padding-bottom: 0;
     summary {
