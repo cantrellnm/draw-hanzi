@@ -1,6 +1,7 @@
 const validator = require('validator');
 
 const List = require('../models/List');
+const Score = require('../models/Score');
 
 
 /**
@@ -117,6 +118,35 @@ exports.deleteList = (req, res) => {
     req.flash('info', { msg: `The list "${list.name}" has been deleted.` });
     res.redirect('/account/lists');
   });
+};
+
+/**
+  * POST /account/sort
+  * Sort list content
+ */
+exports.sortList = async (req, res) => {
+  let { content } = req.body;
+  content = content.split(' ');
+  let scores = {};
+  let user = (req.user) ? req.user.id : null;
+  for (let val of content) {
+    scores[val] =  await Score.findOne({ char: val, user });
+  }
+  let list = content.sort((a, b) => {
+    // no score first, lower score first, fewer total attempts first
+    if (!scores[a] && scores[b]) return -1;
+    if (scores[a] && !scores[b]) return 1;
+    if (!scores[a] && !scores[b]) return 0;
+    // both scores exist, compare fields
+    if (scores[a].score < scores[b].score) return -1;
+    if (scores[a].score > scores[b].score) return 1;
+    // scores equal
+    if (scores[a].totalAttempts < scores[b].totalAttempts) return -1;
+    if (scores[a].totalAttempts > scores[b].totalAttempts) return 1;
+    // all equal
+    return 0;
+  });
+  return res.status(200).json({ list });
 };
 
 function filterListContent(content) {

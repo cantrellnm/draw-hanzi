@@ -133,6 +133,7 @@ app.get('/signup', userController.getSignup);
 app.post('/signup', userController.postSignup);
 app.get('/lists', listController.getPublicLists);
 app.get('/list/:id', listController.viewList);
+app.post('/list/sort', listController.sortList);
 app.get('/draw/:char', charController.getCharDraw);
 app.get('/char/strokes/:char', charController.getCharStrokes);
 app.get('/char/data/:char', charController.getCharData);

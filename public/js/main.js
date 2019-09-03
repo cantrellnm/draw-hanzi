@@ -93,19 +93,19 @@ function validateListContent(e) {
   textarea.value = textarea.value.replace(/\s{2,}/g, ' ');
 }
 
-function setList(target) {
+async function setList(target) {
   list = $(target).val().split(/\s/);
-  orderedList = orderList();
+  orderedList = await orderList();
   setListIndex(0);
 }
 
-function setListOrder() {
+async function setListOrder() {
   listOrder = $(this).val();
-  orderedList = orderList();
+  orderedList = await orderList();
   setListIndex(0);
 }
 
-function orderList() {
+async function orderList() {
   switch (listOrder) {
     case 'original':
       return [...list];
@@ -113,6 +113,16 @@ function orderList() {
       return [...list].reverse();
     case 'random':
       return [...list].sort((a, b) => { return 0.5 - Math.random(); });
+    case 'score':
+      return await new Promise((resolve, reject) => {
+        $.post("/list/sort", { content: list.join(' '), _csrf: $('#practice-container input[name="_csrf"]').val() }, (res) => {
+          if (res.list) {
+            resolve([...res.list]);
+          } else {
+            resolve([...list]);
+          }
+        }, 'json');
+      });
   }
 }
 
@@ -139,6 +149,10 @@ function characterInfo(char) {
     $('body').addClass('character-info-loading');
     $.getJSON("/char/data/" + char, function(res) {
       $('#practice-character').html('');
+      // score data
+      if (res.score) {
+        $('#practice-character').append(characterAttempts(res.score));
+      }
       // definition data
       if (res.data && res.data.length) {
         res.data.forEach(characterDefinition);
@@ -149,14 +163,19 @@ function characterInfo(char) {
         $('#practice-character').append(`<p class="character-default card-body"><span lang="zh" class="character">${char}</span></p>`);
         console.log(res);
       }
-      // score
-      console.log(res.score);
       // char info loading end
       $('body').removeClass('character-info-loading');
     });
   } else {
     $('#practice-character').html('');
   }
+}
+function characterAttempts(score) {
+  let txt = '<details id="character-score" class="card-body"><summary><i class="fas fa-info fa-xs"></i></summary>';
+  txt += `<p>Current Score: ${score.score}%</p>`;
+  txt += `<p>Total Attempts: ${score.totalAttempts}</p>`;
+  txt += '</details>';
+  return txt;
 }
 function characterDefinition(def) {
   let txt = '<p class="character-definition card-body">';

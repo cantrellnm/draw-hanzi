@@ -177,6 +177,17 @@ body.character-info-loading #practice-character {
   pointer-events: none;
 }
 #practice-character {
+  #character-score {
+    margin-left: auto;
+    padding-bottom: 0;
+    summary {
+      text-align: right;
+    }
+    p {
+      margin-bottom: 0;
+      font-size: .8rem;
+    }
+  }
   grid-area: info;
   margin-bottom: 1rem;
   flex-flow: row wrap;
