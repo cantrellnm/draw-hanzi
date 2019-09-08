@@ -22,7 +22,7 @@ const userSchema = new mongoose.Schema({
   lists: {
     type: [ObjectId],
     ref: 'List',
-    autopopulate: true
+    autopopulate: { options: { sort: { 'public': -1, 'name': 1 } } }
   }
 }, { timestamps: true });
 

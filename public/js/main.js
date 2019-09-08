@@ -78,7 +78,7 @@ $(document).ready(() => {
 
   // SPEAK
   $('body').on('click', 'button.speak', (e) => {
-    let text = e.target.innerText;
+    let text = e.target.getAttribute('data-speak');
     if (text) {
       speech.speak({ text }).catch(console.error);
     }
@@ -156,8 +156,8 @@ function characterInfo(char) {
       // definition data
       if (res.data && res.data.length) {
         res.data.forEach(characterDefinition);
-        if (res.data[0].pinyin && autoplayAudio) {
-          speech.speak({ text: PinyinConverter.convert(res.data[0].pinyin) }).catch(console.error);
+        if (res.data[0].simplified && autoplayAudio) {
+          speech.speak({ text: res.data[0].simplified }).catch(console.error);
         }
       } else {
         $('#practice-character').append(`<p class="character-default card-body"><span lang="zh" class="character">${char}</span></p>`);
@@ -183,7 +183,7 @@ function characterDefinition(def) {
   if (def.traditional && def.traditional !== def.simplified) txt += `<label>Traditional: <span lang="zh" class="character traditional">${def.traditional}</span></label>`;
   if (def.pinyin) {
     if (speech.hasBrowserSupport()) {
-      txt += `<button lang="zh" class="btn pinyin speak">${PinyinConverter.convert(def.pinyin)}  <i class="fas fa-volume-up fa-xs"></i></button>`;
+      txt += `<button lang="zh" data-speak="${def.simplified}" class="btn pinyin speak">${PinyinConverter.convert(def.pinyin)}  <i class="fas fa-volume-up fa-xs"></i></button>`;
     } else {
       txt += `<span lang="zh" class="pinyin">${PinyinConverter.convert(def.pinyin)}</span>`;
     }
