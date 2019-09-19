@@ -4,14 +4,14 @@ block content
   .form-group
     label(for="list-select") List
     select#list-select.custom-select.form-control
-      if user && user.lists.length
+      if user && user.lists && user.lists.length
         optgroup(label="Your Lists")
           each list,i in user.lists
             if !list.public
               option(value=list.content selected=(i===0) ? true : false)= list.name
       optgroup(label="Public Lists")
         each list,i in public_lists
-          option(value=list.content selected=(!user.lists && i===0) ? true : false )=list.name
+          option(value=list.content selected=((!user || !user.lists) && i===0) ? true : false )=list.name
   hr
   include partials/_listoptions
   include partials/_draw
