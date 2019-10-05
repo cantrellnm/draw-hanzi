@@ -12,6 +12,10 @@
           a.nav-link(href='/lists')
             i.fas.fa-list-ul.fa-sm
             | Lists
+        li.nav-item(class=(title === 'About') ? 'active' : undefined)
+          a.nav-link(href='/about')
+            i.fas.fa-question.fa-sm
+            | About
       ul.nav.navbar-nav.ml-auto
         if !user
           li.nav-item(class=(title === 'Login') ? 'active' : undefined)

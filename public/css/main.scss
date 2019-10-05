@@ -35,6 +35,10 @@ footer {
   p, ul {
     margin-bottom: 0;
   }
+
+  a:hover {
+    color: $link-hover-color;
+  }
 }
 
 // Input Fields

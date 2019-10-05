@@ -56,5 +56,5 @@ Thumbs.db
 .VolumeIcon.icns
 .com.apple.timemachine.donotpresent
 
-prod-checklist.md
-notes.md
+*.md
+!README.md
