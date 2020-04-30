@@ -31,7 +31,7 @@
     "hanzi": "^2.1.5",
     "hanzi-writer": "^2.0.0",
     "hanzi-writer-data": "^2.0.1",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "lodash": "^4.17.15",
     "lusca": "^1.6.1",
     "mailchecker": "^3.2.35",
