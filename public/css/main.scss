@@ -177,7 +177,7 @@ menu {
 }
 #practice-container {
   &.hide-character .character-definition .character {
-    display: none;
+    visibility: hidden;
   }
 }
 body.character-info-loading #practice-character {

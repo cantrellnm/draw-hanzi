@@ -207,10 +207,11 @@ function drawCharacters() {
 }
 
 function insertCharacter(char, i, arr) {
-  $('#practice').append(createCharacterContainer(char, i));
+  let size = $('#practice').first().innerWidth();
+  $('#practice').append(createCharacterContainer(char, i, size));
   let writer = HanziWriter.create(`practice-character-${char}-${i}`, char, {
-    width: 200,
-    height: 200,
+    width: size,
+    height: size,
     showOutline,
     highlightCompleteColor: '#5EA360',
     strokeAnimationSpeed: 3, // 2x normal speed
@@ -309,11 +310,11 @@ function animate(writer, delay, i) {
   }
 }
 
-function createCharacterContainer(char, i) {
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="200" height="200" class="practice-character" id="practice-character-${char}-${i}">`+
-            '<line x1="0" y1="0" x2="200" y2="200" stroke="#DDD" />'+
-            '<line x1="200" y1="0" x2="0" y2="200" stroke="#DDD" />'+
-            '<line x1="100" y1="0" x2="100" y2="200" stroke="#DDD" />'+
-            '<line x1="0" y1="100" x2="200" y2="100" stroke="#DDD" />'+
+function createCharacterContainer(char, i, size = 200) {
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${size}" height="${size}" class="practice-character" id="practice-character-${char}-${i}">`+
+            `<line x1="0" y1="0" x2="${size}" y2="${size}" stroke="#DDD" />`+
+            `<line x1="${size}" y1="0" x2="0" y2="${size}" stroke="#DDD" />`+
+            `<line x1="${size/2}" y1="0" x2="${size/2}" y2="${size}" stroke="#DDD" />`+
+            `<line x1="0" y1="${size/2}" x2="${size}" y2="${size/2}" stroke="#DDD" />`+
           '</svg>';
 }
