@@ -43,7 +43,7 @@
     "passport-local": "^1.0.0",
     "passport-oauth2-refresh": "^2.0.0",
     "popper.js": "^1.15.0",
-    "pug": "^3.0.0",
+    "pug": "^3.0.1",
     "validator": "^13.5.2"
   },
   "devDependencies": {
