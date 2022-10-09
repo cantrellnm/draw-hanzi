@@ -12,7 +12,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.10.1",
     "@ladjs/bootstrap-social": "^7.0.2",
-    "axios": "^0.21.0",
+    "axios": "^0.21.2",
     "bcrypt": "^5.0.0",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.3.1",
