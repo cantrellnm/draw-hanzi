@@ -10,7 +10,7 @@ const Score = require('../models/Score');
  */
 
 exports.getPublicLists = (req, res) => {
-  List.find({public: true}).exec((err, lists) => {
+  List.find({public: true}).sort('name').exec((err, lists) => {
     if (err) return res.status(500).send('Server error loading lists');
     res.render('list/public', {
       title: 'Lists',
