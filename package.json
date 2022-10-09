@@ -28,7 +28,7 @@
     "hanzi-writer": "^3.0.0",
     "hanzi-writer-data": "^2.0.1",
     "jquery": "^3.4.1",
-    "lodash": "^4.17.15",
+    "lodash": "^4.17.21",
     "lusca": "^1.6.1",
     "mailchecker": "^4.0.3",
     "moment": "^2.24.0",
