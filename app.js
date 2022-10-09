@@ -14,9 +14,8 @@ const MongoStore = require('connect-mongo')(session);
 const flash = require('express-flash');
 const path = require('path');
 const mongoose = require('mongoose');
-const httpsRedirect = require('./config/https-redirect');
 const passport = require('passport');
-const sass = require('node-sass-middleware');
+const httpsRedirect = require('./config/https-redirect');
 
 /**
  * Load environment variables from .env file, where API keys and passwords are configured.
@@ -59,15 +58,10 @@ mongoose.connection.on('error', (err) => {
 /**
  * Express configuration.
  */
-app.set('host', process.env.IP || '0.0.0.0');
 app.set('port', process.env.PORT || 8080);
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 app.use(compression());
-app.use(sass({
-  src: path.join(__dirname, 'public'),
-  dest: path.join(__dirname, 'public')
-}));
 app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
